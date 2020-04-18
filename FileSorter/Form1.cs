@@ -71,6 +71,10 @@ namespace FileSorter
             {
                 dlg.DestinationItems = FolderLookup;
                 dlg.RecentDestinationItems = RecentDestinationItems;
+                dlg.FileNames = DgvSortedFiles
+                    .SelectedRows
+                    .Cast<DataGridViewRow>()
+                    .Select(r => r.Cells["dgcFileName"].Value as string);
 
                 if (dlg.ShowDialog() != DialogResult.OK)
                 {

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.BtnOkay = new System.Windows.Forms.Button();
             this.DgvDestinations = new System.Windows.Forms.DataGridView();
@@ -39,6 +40,8 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
+            this.LblFileName = new System.Windows.Forms.Label();
+            this.TipFileName = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DgvDestinations)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvRecentDestinations)).BeginInit();
             this.SuspendLayout();
@@ -78,12 +81,12 @@
             this.DgvDestinations.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgcKey,
             this.dgcPath});
-            this.DgvDestinations.Location = new System.Drawing.Point(12, 38);
+            this.DgvDestinations.Location = new System.Drawing.Point(12, 65);
             this.DgvDestinations.MultiSelect = false;
             this.DgvDestinations.Name = "DgvDestinations";
             this.DgvDestinations.RowHeadersVisible = false;
             this.DgvDestinations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvDestinations.Size = new System.Drawing.Size(516, 317);
+            this.DgvDestinations.Size = new System.Drawing.Size(516, 290);
             this.DgvDestinations.TabIndex = 14;
             this.DgvDestinations.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvDestinations_CellDoubleClick);
             this.DgvDestinations.SelectionChanged += new System.EventHandler(this.DgvDestinations_SelectionChanged);
@@ -105,7 +108,7 @@
             // 
             // TxtFilter
             // 
-            this.TxtFilter.Location = new System.Drawing.Point(50, 12);
+            this.TxtFilter.Location = new System.Drawing.Point(50, 39);
             this.TxtFilter.Name = "TxtFilter";
             this.TxtFilter.Size = new System.Drawing.Size(478, 20);
             this.TxtFilter.TabIndex = 15;
@@ -114,7 +117,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 15);
+            this.label1.Location = new System.Drawing.Point(12, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 16;
@@ -167,6 +170,15 @@
             this.label2.TabIndex = 18;
             this.label2.Text = "Recently selected:";
             // 
+            // LblFileName
+            // 
+            this.LblFileName.AutoSize = true;
+            this.LblFileName.Location = new System.Drawing.Point(12, 9);
+            this.LblFileName.Name = "LblFileName";
+            this.LblFileName.Size = new System.Drawing.Size(57, 13);
+            this.LblFileName.TabIndex = 19;
+            this.LblFileName.Text = "Assign file:";
+            // 
             // AssignDestination
             // 
             this.AcceptButton = this.BtnOkay;
@@ -174,6 +186,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancel;
             this.ClientSize = new System.Drawing.Size(540, 596);
+            this.Controls.Add(this.LblFileName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.DgvRecentDestinations);
             this.Controls.Add(this.label1);
@@ -203,5 +216,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label LblFileName;
+        private System.Windows.Forms.ToolTip TipFileName;
     }
 }

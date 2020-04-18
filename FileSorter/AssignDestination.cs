@@ -17,6 +17,9 @@ namespace FileSorter
         public IEnumerable<DestinationItem> DestinationItems { get; set; }
         public IEnumerable<DestinationItem> RecentDestinationItems { get; set; }
         public DestinationItem SelectedDestination { get; set; }
+        public IEnumerable<string> FileNames { get; set; }
+
+        private string FileNamePrefix { get; set; }
 
         public AssignDestination()
         {
@@ -31,6 +34,10 @@ namespace FileSorter
             DgvDestinations.ClearSelection();
             DgvRecentDestinations.ClearSelection();
 
+            FileNamePrefix = LblFileName.Text;
+            LblFileName.Text = FileNamePrefix + " " + FileNames.FirstOrDefault();
+            TipFileName.SetToolTip(LblFileName, string.Join("\r\n", FileNames.ToArray()));
+            
             base.OnLoad(e);
         }
 
@@ -101,7 +108,7 @@ namespace FileSorter
             {
                 SelectedDestination = DgvRecentDestinations.SelectedRows[0].Tag as DestinationItem;
             }
-            
+
             DialogResult = DialogResult.OK;
         }
 

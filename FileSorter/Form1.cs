@@ -200,6 +200,8 @@ namespace FileSorter
                     continue;
                 }
 
+                // Replacing all punctuation characters with whitespace might be better
+                // but requires regex, so it might be too slow.
                 name = name.Replace('_', ' ');
 
                 foreach (var kvp in folder_lookup)

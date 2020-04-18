@@ -40,7 +40,9 @@ namespace FileSorter
             }
         }
 
-        private IOrderedEnumerable<DestinationItem> FolderLookup;
+        private List<DestinationItem> FolderLookup;
+
+        private OrderedSet<DestinationItem> RecentDestinationItems = new OrderedSet<DestinationItem>();
 
         public Form1()
         {
@@ -51,9 +53,9 @@ namespace FileSorter
         {
             FolderLookup = DestinationPaths
                 .SelectMany(dp => BuildFolderLookup(dp))
-                .OrderByDescending(f => f.Key.Length);
+                .OrderByDescending(f => f.Key.Length).ToList();
 
-            var filtered_files = GetFilteredFiles(FolderLookup.ToList());
+            var filtered_files = GetFilteredFiles(FolderLookup);
             DisplayFilteredFiles(filtered_files);
         }
 
@@ -68,6 +70,11 @@ namespace FileSorter
             using (var dlg = new AssignDestination())
             {
                 dlg.DestinationItems = FolderLookup;
+                dlg.RecentDestinationItems = RecentDestinationItems;
+                dlg.FileNames = DgvSortedFiles
+                    .SelectedRows
+                    .Cast<DataGridViewRow>()
+                    .Select(r => r.Cells["dgcFileName"].Value as string);
 
                 if (dlg.ShowDialog() != DialogResult.OK)
                 {
@@ -75,6 +82,7 @@ namespace FileSorter
                 }
 
                 selected_destination = dlg.SelectedDestination;
+                RecentDestinationItems.Add(dlg.SelectedDestination);
             }
 
             foreach (DataGridViewRow row in DgvSortedFiles.SelectedRows)
@@ -229,6 +237,7 @@ namespace FileSorter
             return Directory.EnumerateDirectories(destination_path, "*", SearchOption.TopDirectoryOnly)
                 .SelectMany(path =>
                 {
+                    Debug.Print(path);
                     var name = Path.GetFileName(path);
 
                     var recorded_path = Directory.EnumerateDirectories(path, "recorded", SearchOption.TopDirectoryOnly);

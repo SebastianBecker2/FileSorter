@@ -54,7 +54,7 @@ namespace FileSorter
 
                 var cell = new DataGridViewTextBoxCell()
                 {
-                    Value = item.Key,
+                    Value = item.Key.Trim(),
                 };
                 row.Cells.Add(cell);
 
@@ -81,7 +81,7 @@ namespace FileSorter
 
                 var cell = new DataGridViewTextBoxCell()
                 {
-                    Value = item.Key,
+                    Value = item.Key.Trim(),
                 };
                 row.Cells.Add(cell);
 

@@ -34,7 +34,7 @@
             this.DgcDone = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.DgcText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgcDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.ChbHideCompletedItems = new System.Windows.Forms.CheckBox();
+            this.ChbShowCompletedItems = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgvToDoList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,19 +99,17 @@
             this.DgcDelete.Name = "DgcDelete";
             this.DgcDelete.Width = 44;
             // 
-            // ChbHideCompletedItems
+            // ChbShowCompletedItems
             // 
-            this.ChbHideCompletedItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ChbHideCompletedItems.AutoSize = true;
-            this.ChbHideCompletedItems.Checked = true;
-            this.ChbHideCompletedItems.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ChbHideCompletedItems.Location = new System.Drawing.Point(12, 419);
-            this.ChbHideCompletedItems.Name = "ChbHideCompletedItems";
-            this.ChbHideCompletedItems.Size = new System.Drawing.Size(127, 17);
-            this.ChbHideCompletedItems.TabIndex = 19;
-            this.ChbHideCompletedItems.Text = "Hide completed items";
-            this.ChbHideCompletedItems.UseVisualStyleBackColor = true;
-            this.ChbHideCompletedItems.CheckedChanged += new System.EventHandler(this.ChbHideCompletedItems_CheckedChanged);
+            this.ChbShowCompletedItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ChbShowCompletedItems.AutoSize = true;
+            this.ChbShowCompletedItems.Location = new System.Drawing.Point(12, 419);
+            this.ChbShowCompletedItems.Name = "ChbShowCompletedItems";
+            this.ChbShowCompletedItems.Size = new System.Drawing.Size(132, 17);
+            this.ChbShowCompletedItems.TabIndex = 19;
+            this.ChbShowCompletedItems.Text = "Show completed items";
+            this.ChbShowCompletedItems.UseVisualStyleBackColor = true;
+            this.ChbShowCompletedItems.CheckedChanged += new System.EventHandler(this.ChbShowCompletedItems_CheckedChanged);
             // 
             // ToDoManager
             // 
@@ -120,7 +118,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancel;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.ChbHideCompletedItems);
+            this.Controls.Add(this.ChbShowCompletedItems);
             this.Controls.Add(this.DgvToDoList);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOkay);
@@ -140,6 +138,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn DgcDone;
         private System.Windows.Forms.DataGridViewTextBoxColumn DgcText;
         private System.Windows.Forms.DataGridViewButtonColumn DgcDelete;
-        private System.Windows.Forms.CheckBox ChbHideCompletedItems;
+        private System.Windows.Forms.CheckBox ChbShowCompletedItems;
     }
 }

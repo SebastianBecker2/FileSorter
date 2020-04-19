@@ -120,7 +120,7 @@ namespace ToDoManager
             DgvToDoList.Rows.RemoveAt(e.RowIndex);
         }
 
-        private void ChbHideCompletedItems_CheckedChanged(object sender, EventArgs e)
+        private void ChbShowCompletedItems_CheckedChanged(object sender, EventArgs e)
         {
             ApplyFilterToDgv();
         }
@@ -132,7 +132,7 @@ namespace ToDoManager
                 .Where(r => !r.IsNewRow)
                 .Where(r => (bool)(r.Cells["DgcDone"] as DataGridViewCheckBoxCell).Value))
             {
-                row.Visible = !ChbHideCompletedItems.Checked;
+                row.Visible = ChbShowCompletedItems.Checked;
             }
         }
     }

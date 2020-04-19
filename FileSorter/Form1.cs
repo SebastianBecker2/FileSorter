@@ -49,14 +49,18 @@ namespace FileSorter
             InitializeComponent();
         }
 
+        // Only used inside BtnFindFiles_Click
+        // To preserve previous check box states
+        // when searching for files a second time.
+        private List<File> FilterableFiles;
         private void BtnFindFiles_Click(object sender, EventArgs e)
         {
             FolderLookup = DestinationPaths
                 .SelectMany(dp => BuildFolderLookup(dp))
                 .OrderByDescending(f => f.Key.Length).ToList();
 
-            var filterable_files = GetFilterableFiles(FolderLookup);
-            DisplayFilteredFiles(filterable_files);
+            FilterableFiles = GetFilterableFiles(FolderLookup, FilterableFiles).ToList();
+            DisplayFilteredFiles(FilterableFiles);
         }
 
         private void FileContextMenu_ReassignDestination(object sender, EventArgs e)
@@ -228,11 +232,14 @@ namespace FileSorter
             DgvSortedFiles.Sort(DgvSortedFiles.Columns["dgcFilteredKey"], ListSortDirection.Ascending);
         }
 
-        private IEnumerable<File> GetFilterableFiles(List<DestinationItem> folder_lookup)
+        private IEnumerable<File> GetFilterableFiles(IEnumerable<DestinationItem> folder_lookup, IEnumerable<File> previous_files)
         {
             foreach (var file_path in Directory.EnumerateFiles(SourcePath, "*", SearchOption.TopDirectoryOnly))
             {
                 var name = Path.GetFileName(file_path);
+                var previous_file = previous_files?.FirstOrDefault(f => f.FileName == name);
+                var previously_filtered = !string.IsNullOrWhiteSpace(previous_file?.FilterKey);
+
                 bool filtered_file = false;
 
                 foreach (var kvp in folder_lookup)
@@ -248,7 +255,7 @@ namespace FileSorter
                         FilePath = file_path,
                         FileName = name,
                         FilterKey = kvp.Key,
-                        Sort = true,
+                        Sort = previously_filtered ? previous_file.Sort : true,
                     };
                     filtered_file = true;
                     break;
@@ -276,7 +283,7 @@ namespace FileSorter
                         FilePath = file_path,
                         FileName = name,
                         FilterKey = kvp.Key,
-                        Sort = true,
+                        Sort = previously_filtered ? previous_file.Sort : true,
                     };
                     filtered_file = true;
                     break;
@@ -385,6 +392,8 @@ namespace FileSorter
             {
                 MoveFile(file.FilePath, Path.Combine(file.DestinationFolderPath, file.FileName));
             }
+
+            BtnFindFiles.PerformClick();
         }
 
         private void MoveFile(string source, string destination)

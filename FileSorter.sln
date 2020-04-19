@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSorter", "FileSorter\FileSorter.csproj", "{3D59FE68-7B07-4864-917B-8BC29589438D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoManager", "ToDoManager\ToDoManager.csproj", "{678EBC3A-44FE-4325-85AA-866001164074}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3D59FE68-7B07-4864-917B-8BC29589438D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D59FE68-7B07-4864-917B-8BC29589438D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D59FE68-7B07-4864-917B-8BC29589438D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{678EBC3A-44FE-4325-85AA-866001164074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678EBC3A-44FE-4325-85AA-866001164074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678EBC3A-44FE-4325-85AA-866001164074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678EBC3A-44FE-4325-85AA-866001164074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

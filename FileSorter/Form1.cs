@@ -388,6 +388,7 @@ namespace FileSorter
             foreach (var file in DgvSortedFiles.Rows
                 .Cast<DataGridViewRow>()
                 .Select(r => r.Tag as File)
+                .Where(f => !string.IsNullOrWhiteSpace(f.FilterKey))
                 .Where(f => f.Sort))
             {
                 MoveFile(file.FilePath, Path.Combine(file.DestinationFolderPath, file.FileName));

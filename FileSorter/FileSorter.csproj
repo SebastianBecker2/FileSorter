@@ -73,6 +73,12 @@
     <Compile Include="Config.Designer.cs">
       <DependentUpon>Config.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateDestination.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateDestination.Designer.cs">
+      <DependentUpon>CreateDestination.cs</DependentUpon>
+    </Compile>
     <Compile Include="DestinationItem.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FileAreadyExistsMessageBox.cs">
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Config.resx">
       <DependentUpon>Config.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateDestination.resx">
+      <DependentUpon>CreateDestination.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileAreadyExistsMessageBox.resx">
       <DependentUpon>FileAreadyExistsMessageBox.cs</DependentUpon>

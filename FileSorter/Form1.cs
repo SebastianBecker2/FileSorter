@@ -95,6 +95,52 @@ namespace FileSorter
             }
         }
 
+        private void FileContextMenu_CreateDestination(object sender, EventArgs e)
+        {
+            if (DgvSortedFiles.SelectedRows.Count <= 0)
+            {
+                return;
+            }
+
+            string new_destination;
+            string selected_path;
+            using (var dlg = new CreateDestination())
+            {
+                dlg.DestinationPaths = DestinationPaths;
+                dlg.FileNames = DgvSortedFiles
+                    .SelectedRows
+                    .Cast<DataGridViewRow>()
+                    .Select(r => r.Cells["dgcFileName"].Value as string);
+
+                if (dlg.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                new_destination = dlg.DestinationName;
+                selected_path = dlg.SelectedDestinationPath;
+            }
+
+            var items = new_destination
+                .Split('(', ')', ',')
+                .Where(n => !string.IsNullOrWhiteSpace(n))
+                .Select(n => new DestinationItem { Key = n, Path = selected_path });
+
+            FolderLookup.AddRange(items);
+
+            Directory.CreateDirectory(
+                Path.Combine(selected_path, new_destination));
+
+            foreach (DataGridViewRow row in DgvSortedFiles.SelectedRows)
+            {
+                var file = row.Tag as File;
+                file.DestinationFolderPath = items.First().Path;
+                file.FilterKey = items.First().Key;
+                row.Cells["dgcDestinationPath"].Value = items.First().Path;
+                row.Cells["dgcFilteredKey"].Value = items.First().Key;
+            }
+        }
+
         private void FileContextMenu_MoveFile(object sender, EventArgs e)
         {
             if (DgvSortedFiles.SelectedRows.Count <= 0)
@@ -137,6 +183,7 @@ namespace FileSorter
 
             var cms = new ContextMenuStrip();
             cms.Items.Add(new ToolStripMenuItem("Reassign Destination", null, FileContextMenu_ReassignDestination));
+            cms.Items.Add(new ToolStripMenuItem("Create Destination", null, FileContextMenu_CreateDestination));
             cms.Items.Add(new ToolStripMenuItem("Move File", null, FileContextMenu_MoveFile));
 
             foreach (var file in filtered_files)

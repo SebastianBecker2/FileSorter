@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.DgvSortedFiles = new System.Windows.Forms.DataGridView();
-            this.dgcSort = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dgcFilteredKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcDestinationPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnSortFiles = new System.Windows.Forms.Button();
             this.BtnFindFiles = new System.Windows.Forms.Button();
             this.BtnShowConfig = new System.Windows.Forms.Button();
             this.BtnShowToDoList = new System.Windows.Forms.Button();
+            this.dgcSort = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgcFilteredKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgcFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgcDestinationPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvSortedFiles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,36 +65,6 @@
             this.DgvSortedFiles.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSortedFiles_CellValueChanged);
             this.DgvSortedFiles.CurrentCellDirtyStateChanged += new System.EventHandler(this.DgvSortedFiles_CurrentCellDirtyStateChanged);
             this.DgvSortedFiles.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DgvSortedFiles_KeyPress);
-            // 
-            // dgcSort
-            // 
-            this.dgcSort.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dgcSort.HeaderText = "Sort";
-            this.dgcSort.Name = "dgcSort";
-            this.dgcSort.Width = 32;
-            // 
-            // dgcFilteredKey
-            // 
-            this.dgcFilteredKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dgcFilteredKey.HeaderText = "Key";
-            this.dgcFilteredKey.Name = "dgcFilteredKey";
-            this.dgcFilteredKey.ReadOnly = true;
-            this.dgcFilteredKey.Width = 50;
-            // 
-            // dgcFileName
-            // 
-            this.dgcFileName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dgcFileName.HeaderText = "FileName";
-            this.dgcFileName.Name = "dgcFileName";
-            this.dgcFileName.ReadOnly = true;
-            this.dgcFileName.Width = 76;
-            // 
-            // dgcDestinationPath
-            // 
-            this.dgcDestinationPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dgcDestinationPath.HeaderText = "DestinationPath";
-            this.dgcDestinationPath.Name = "dgcDestinationPath";
-            this.dgcDestinationPath.ReadOnly = true;
             // 
             // BtnSortFiles
             // 
@@ -139,6 +109,37 @@
             this.BtnShowToDoList.UseVisualStyleBackColor = true;
             this.BtnShowToDoList.Click += new System.EventHandler(this.BtnShowToDoList_Click);
             // 
+            // dgcSort
+            // 
+            this.dgcSort.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dgcSort.HeaderText = "Sort";
+            this.dgcSort.Name = "dgcSort";
+            this.dgcSort.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dgcSort.Width = 51;
+            // 
+            // dgcFilteredKey
+            // 
+            this.dgcFilteredKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgcFilteredKey.HeaderText = "Key";
+            this.dgcFilteredKey.Name = "dgcFilteredKey";
+            this.dgcFilteredKey.ReadOnly = true;
+            this.dgcFilteredKey.Width = 50;
+            // 
+            // dgcFileName
+            // 
+            this.dgcFileName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgcFileName.HeaderText = "FileName";
+            this.dgcFileName.Name = "dgcFileName";
+            this.dgcFileName.ReadOnly = true;
+            this.dgcFileName.Width = 76;
+            // 
+            // dgcDestinationPath
+            // 
+            this.dgcDestinationPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgcDestinationPath.HeaderText = "DestinationPath";
+            this.dgcDestinationPath.Name = "dgcDestinationPath";
+            this.dgcDestinationPath.ReadOnly = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,12 +161,12 @@
         private System.Windows.Forms.DataGridView DgvSortedFiles;
         private System.Windows.Forms.Button BtnSortFiles;
         private System.Windows.Forms.Button BtnFindFiles;
+        private System.Windows.Forms.Button BtnShowConfig;
+        private System.Windows.Forms.Button BtnShowToDoList;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dgcSort;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcFilteredKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcFileName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcDestinationPath;
-        private System.Windows.Forms.Button BtnShowConfig;
-        private System.Windows.Forms.Button BtnShowToDoList;
     }
 }
 

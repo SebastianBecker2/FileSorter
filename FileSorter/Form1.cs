@@ -55,8 +55,8 @@ namespace FileSorter
                 .SelectMany(dp => BuildFolderLookup(dp))
                 .OrderByDescending(f => f.Key.Length).ToList();
 
-            var filtered_files = GetFilteredFiles(FolderLookup);
-            DisplayFilteredFiles(filtered_files);
+            var filterable_files = GetFilterableFiles(FolderLookup);
+            DisplayFilteredFiles(filterable_files);
         }
 
         private void FileContextMenu_ReassignDestination(object sender, EventArgs e)
@@ -90,8 +90,10 @@ namespace FileSorter
                 var file = row.Tag as File;
                 file.DestinationFolderPath = selected_destination.Path;
                 file.FilterKey = selected_destination.Key;
+                file.Sort = true;
                 row.Cells["dgcDestinationPath"].Value = selected_destination.Path;
                 row.Cells["dgcFilteredKey"].Value = selected_destination.Key;
+                row.Cells["dgcSort"].Value = true;
             }
         }
 
@@ -136,8 +138,10 @@ namespace FileSorter
                 var file = row.Tag as File;
                 file.DestinationFolderPath = items.First().Path;
                 file.FilterKey = items.First().Key;
+                file.Sort = true;
                 row.Cells["dgcDestinationPath"].Value = items.First().Path;
                 row.Cells["dgcFilteredKey"].Value = items.First().Key;
+                row.Cells["dgcSort"].Value = true;
             }
         }
 
@@ -224,7 +228,7 @@ namespace FileSorter
             DgvSortedFiles.Sort(DgvSortedFiles.Columns["dgcFilteredKey"], ListSortDirection.Ascending);
         }
 
-        private IEnumerable<File> GetFilteredFiles(List<DestinationItem> folder_lookup)
+        private IEnumerable<File> GetFilterableFiles(List<DestinationItem> folder_lookup)
         {
             foreach (var file_path in Directory.EnumerateFiles(SourcePath, "*", SearchOption.TopDirectoryOnly))
             {
@@ -274,8 +278,21 @@ namespace FileSorter
                         FilterKey = kvp.Key,
                         Sort = true,
                     };
+                    filtered_file = true;
                     break;
                 }
+
+                if (filtered_file)
+                {
+                    continue;
+                }
+
+                yield return new File
+                {
+                    FilePath = file_path,
+                    FileName = name,
+                    Sort = false,
+                };
             }
         }
 

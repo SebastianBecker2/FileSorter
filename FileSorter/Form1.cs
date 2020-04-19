@@ -462,5 +462,13 @@ namespace FileSorter
                 dgv.Invalidate();
             }
         }
+
+        private void BtnShowToDoList_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new ToDoManager.ToDoManager())
+            {
+                dlg.ShowDialog();
+            }
+        }
     }
 }

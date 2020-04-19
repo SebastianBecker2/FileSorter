@@ -36,6 +36,7 @@
             this.BtnSortFiles = new System.Windows.Forms.Button();
             this.BtnFindFiles = new System.Windows.Forms.Button();
             this.BtnShowConfig = new System.Windows.Forms.Button();
+            this.BtnShowToDoList = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvSortedFiles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,11 +128,23 @@
             this.BtnShowConfig.UseVisualStyleBackColor = true;
             this.BtnShowConfig.Click += new System.EventHandler(this.BtnShowConfig_Click);
             // 
+            // BtnShowToDoList
+            // 
+            this.BtnShowToDoList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnShowToDoList.Location = new System.Drawing.Point(542, 12);
+            this.BtnShowToDoList.Name = "BtnShowToDoList";
+            this.BtnShowToDoList.Size = new System.Drawing.Size(120, 23);
+            this.BtnShowToDoList.TabIndex = 10;
+            this.BtnShowToDoList.Text = "ToDo List";
+            this.BtnShowToDoList.UseVisualStyleBackColor = true;
+            this.BtnShowToDoList.Click += new System.EventHandler(this.BtnShowToDoList_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtnShowToDoList);
             this.Controls.Add(this.BtnShowConfig);
             this.Controls.Add(this.BtnFindFiles);
             this.Controls.Add(this.BtnSortFiles);
@@ -152,6 +165,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcFileName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcDestinationPath;
         private System.Windows.Forms.Button BtnShowConfig;
+        private System.Windows.Forms.Button BtnShowToDoList;
     }
 }
 

@@ -185,6 +185,24 @@ namespace FileSorter
             }
         }
 
+        private void FileContextMenu_ShowFileInfo(object sender, EventArgs e)
+        {
+            if (DgvSortedFiles.SelectedRows.Count <= 0)
+            {
+                return;
+            }
+
+            foreach (DataGridViewRow row in DgvSortedFiles.SelectedRows)
+            {
+                using (var dlg = new FileInfo())
+                {
+                    var file = row.Tag as File;
+                    dlg.FilePath = file.FilePath;
+                    dlg.ShowDialog();
+                }
+            }
+        }
+
         private void DisplayFilteredFiles(IEnumerable<File> filtered_files)
         {
             DgvSortedFiles.Rows.Clear();
@@ -193,6 +211,7 @@ namespace FileSorter
             cms.Items.Add(new ToolStripMenuItem("Reassign Destination", null, FileContextMenu_ReassignDestination));
             cms.Items.Add(new ToolStripMenuItem("Create Destination", null, FileContextMenu_CreateDestination));
             cms.Items.Add(new ToolStripMenuItem("Move File", null, FileContextMenu_MoveFile));
+            cms.Items.Add(new ToolStripMenuItem("Show File Info", null, FileContextMenu_ShowFileInfo));
 
             foreach (var file in filtered_files)
             {
@@ -405,19 +424,25 @@ namespace FileSorter
             }
             catch (IOException)
             {
-                using (var dlg = new FileAreadyExistsMessageBox())
+                using (var dlg = new FileComparison())
                 {
-                    dlg.FileName = Path.GetFileName(source);
+                    dlg.SourceFilePath = source;
+                    dlg.DestinationFilePath = destination;
                     var result = dlg.ShowDialog();
                     switch (result)
                     {
-                        case DialogResult.Yes:
+                        case DialogResult.Cancel:
+                            break;
+                        case DialogResult.Ignore:
+                            System.IO.File.Delete(destination);
+                            MoveFile(source, destination);
+                            break;
+                        case DialogResult.OK:
                             destination = IncreaseFileCounter(destination);
                             MoveFile(source, destination);
                             break;
                         case DialogResult.No:
-                            System.IO.File.Delete(destination);
-                            MoveFile(source, destination);
+                            System.IO.File.Delete(source);
                             break;
                     }
                 }

@@ -46,6 +46,7 @@
             // BtnOkay
             // 
             this.BtnOkay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnOkay.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnOkay.Location = new System.Drawing.Point(360, 499);
             this.BtnOkay.Name = "BtnOkay";
             this.BtnOkay.Size = new System.Drawing.Size(75, 23);
@@ -64,8 +65,10 @@
             // 
             // FileInfo
             // 
+            this.AcceptButton = this.BtnOkay;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BtnOkay;
             this.ClientSize = new System.Drawing.Size(446, 534);
             this.Controls.Add(this.LblFileName);
             this.Controls.Add(this.BtnOkay);

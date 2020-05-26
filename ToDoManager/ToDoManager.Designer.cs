@@ -35,6 +35,9 @@
             this.DgcText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgcDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ChbShowCompletedItems = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TxtToDoFilePath = new System.Windows.Forms.TextBox();
+            this.BtnToDoFileSelect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvToDoList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,11 +73,11 @@
             this.DgcDone,
             this.DgcText,
             this.DgcDelete});
-            this.DgvToDoList.Location = new System.Drawing.Point(12, 12);
+            this.DgvToDoList.Location = new System.Drawing.Point(12, 37);
             this.DgvToDoList.MultiSelect = false;
             this.DgvToDoList.Name = "DgvToDoList";
             this.DgvToDoList.RowHeadersVisible = false;
-            this.DgvToDoList.Size = new System.Drawing.Size(776, 397);
+            this.DgvToDoList.Size = new System.Drawing.Size(776, 372);
             this.DgvToDoList.TabIndex = 18;
             this.DgvToDoList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvToDoList_CellContentClick);
             this.DgvToDoList.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.DgvToDoList_DefaultValuesNeeded);
@@ -111,6 +114,32 @@
             this.ChbShowCompletedItems.UseVisualStyleBackColor = true;
             this.ChbShowCompletedItems.CheckedChanged += new System.EventHandler(this.ChbShowCompletedItems_CheckedChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "ToDo-File:";
+            // 
+            // TxtToDoFilePath
+            // 
+            this.TxtToDoFilePath.Location = new System.Drawing.Point(75, 10);
+            this.TxtToDoFilePath.Name = "TxtToDoFilePath";
+            this.TxtToDoFilePath.Size = new System.Drawing.Size(678, 20);
+            this.TxtToDoFilePath.TabIndex = 21;
+            // 
+            // BtnToDoFileSelect
+            // 
+            this.BtnToDoFileSelect.Location = new System.Drawing.Point(759, 8);
+            this.BtnToDoFileSelect.Name = "BtnToDoFileSelect";
+            this.BtnToDoFileSelect.Size = new System.Drawing.Size(29, 23);
+            this.BtnToDoFileSelect.TabIndex = 22;
+            this.BtnToDoFileSelect.Text = "...";
+            this.BtnToDoFileSelect.UseVisualStyleBackColor = true;
+            this.BtnToDoFileSelect.Click += new System.EventHandler(this.BtnToDoFileSelect_Click);
+            // 
             // ToDoManager
             // 
             this.AcceptButton = this.BtnOkay;
@@ -118,6 +147,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancel;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtnToDoFileSelect);
+            this.Controls.Add(this.TxtToDoFilePath);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ChbShowCompletedItems);
             this.Controls.Add(this.DgvToDoList);
             this.Controls.Add(this.BtnCancel);
@@ -139,5 +171,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DgcText;
         private System.Windows.Forms.DataGridViewButtonColumn DgcDelete;
         private System.Windows.Forms.CheckBox ChbShowCompletedItems;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox TxtToDoFilePath;
+        private System.Windows.Forms.Button BtnToDoFileSelect;
     }
 }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,13 +16,22 @@ namespace ToDoManager
 {
     public partial class ToDoManager : Form
     {
-        List<ToDoItem> ToDoItems
+        string ToDoFilePath
         {
-            get { return JsonConvert.DeserializeObject<List<ToDoItem>>(Settings.Default.ToDoListItem); }
+            get { return Settings.Default.ToDoFilePath; }
             set
             {
-                Settings.Default.ToDoListItem = JsonConvert.SerializeObject(value);
+                Settings.Default.ToDoFilePath = value;
                 Settings.Default.Save();
+            }
+        }
+
+        List<ToDoItem> ToDoItems
+        {
+            get { return JsonConvert.DeserializeObject<List<ToDoItem>>(File.ReadAllText(ToDoFilePath)); }
+            set
+            {
+                File.WriteAllText(ToDoFilePath, JsonConvert.SerializeObject(value));
             }
         }
 
@@ -40,6 +50,8 @@ namespace ToDoManager
 
         protected override void OnLoad(EventArgs e)
         {
+            TxtToDoFilePath.Text = ToDoFilePath;
+
             DisplayToDoList(ToDoItems);
 
             ApplyFilterToDgv();
@@ -70,7 +82,7 @@ namespace ToDoManager
                 var delete_cell = new DataGridViewButtonCell()
                 {
                     Value = "X",
-                    
+
                 };
                 row.Cells.Add(delete_cell);
 
@@ -93,7 +105,10 @@ namespace ToDoManager
 
         private void BtnOkay_Click(object sender, EventArgs e)
         {
+            ToDoFilePath = TxtToDoFilePath.Text;
+
             ToDoItems = GetToDoItemsFromDgv();
+
 
             DialogResult = DialogResult.OK;
         }
@@ -133,6 +148,20 @@ namespace ToDoManager
                 .Where(r => (bool)(r.Cells["DgcDone"] as DataGridViewCheckBoxCell).Value))
             {
                 row.Visible = ChbShowCompletedItems.Checked;
+            }
+        }
+
+        private void BtnToDoFileSelect_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Title = "ToDoFile";
+                dlg.Filter = "Json|*.json";
+                if (dlg.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                TxtToDoFilePath.Text = dlg.FileName;
             }
         }
     }

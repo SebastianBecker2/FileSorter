@@ -327,7 +327,6 @@ namespace FileSorter
             return Directory.EnumerateDirectories(destination_path, "*", SearchOption.TopDirectoryOnly)
                 .SelectMany(path =>
                 {
-                    Debug.Print(path);
                     var name = Path.GetFileName(path);
 
                     var recorded_path = Directory.EnumerateDirectories(path, "recorded", SearchOption.TopDirectoryOnly);

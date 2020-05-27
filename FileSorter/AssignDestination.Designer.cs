@@ -111,7 +111,7 @@
             this.TxtFilter.Location = new System.Drawing.Point(50, 39);
             this.TxtFilter.Name = "TxtFilter";
             this.TxtFilter.Size = new System.Drawing.Size(478, 20);
-            this.TxtFilter.TabIndex = 15;
+            this.TxtFilter.TabIndex = 1;
             this.TxtFilter.TextChanged += new System.EventHandler(this.TxtFilter_TextChanged);
             // 
             // label1

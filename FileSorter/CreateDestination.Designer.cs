@@ -129,6 +129,7 @@
             this.Controls.Add(this.TxtDestinationName);
             this.Controls.Add(this.TxtFileName);
             this.Name = "CreateDestination";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create Destination";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -63,7 +63,7 @@ namespace FileSorter
             TxtInfo.Text += stream.Width.ToString() +
                 " x " + stream.Height.ToString() +
                 " @ " + stream.FrameRate + " Frames" + Environment.NewLine +
-                stream.CodecLongName + Environment.NewLine;
+                stream.CodecLongName;
         }
 
         public Task LoadFile(string file_path)

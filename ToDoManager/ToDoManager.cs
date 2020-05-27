@@ -31,7 +31,7 @@ namespace ToDoManager
             get { return JsonConvert.DeserializeObject<List<ToDoItem>>(File.ReadAllText(ToDoFilePath)); }
             set
             {
-                File.WriteAllText(ToDoFilePath, JsonConvert.SerializeObject(value));
+                File.WriteAllText(ToDoFilePath, JsonConvert.SerializeObject(value, Formatting.Indented));
             }
         }
 

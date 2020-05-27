@@ -40,12 +40,17 @@ namespace FileSorter
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (!DestinationThumbnailTask.IsCompleted || !SourceThumbnailTask.IsCompleted)
+            if (!SourceThumbnailTask.IsCompleted)
             {
                 e.Cancel = true;
                 FpvSource.CancelThumbnails();
-                FpvDestination.CancelThumbnails();
                 SourceThumbnailTask.ContinueWith(t => Close(), TaskScheduler.FromCurrentSynchronizationContext());
+            }
+
+            if (!DestinationThumbnailTask.IsCompleted)
+            {
+                e.Cancel = true;
+                FpvDestination.CancelThumbnails();
                 DestinationThumbnailTask.ContinueWith(t => Close(), TaskScheduler.FromCurrentSynchronizationContext());
             }
 

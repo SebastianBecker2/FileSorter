@@ -13,6 +13,12 @@ using System.Diagnostics;
 
 namespace FileSorter
 {
+    public class FileInfoLoadedEventArgs : EventArgs
+    {
+        public NReco.VideoInfo.MediaInfo FileInfo { get; set; }
+        public long FileSize { get; set; }
+    }
+
     public partial class FilePreview : UserControl
     {
         private static readonly int ThumbnailCount = 20;
@@ -20,6 +26,26 @@ namespace FileSorter
         private static readonly ColorDepth ThumbnailColorDepth = ColorDepth.Depth32Bit;
 
         private CancellationTokenSource CancelTokenSource = new CancellationTokenSource();
+
+        public Color HighlightColor
+        {
+            get { return TxtInfo.BackColor; }
+            set { TxtInfo.BackColor = value; }
+        }
+
+        public NReco.VideoInfo.MediaInfo FileInfo { get; set; }
+        public long FileSize { get; set; }
+
+        public event EventHandler<FileInfoLoadedEventArgs> FileInfoLoaded;
+
+        protected virtual void OnFileInfoLoaded(NReco.VideoInfo.MediaInfo file_info, long file_size)
+        {
+            FileInfoLoaded?.Invoke(this, new FileInfoLoadedEventArgs
+            {
+                FileInfo = file_info,
+                FileSize = file_size
+            });
+        }
 
         public FilePreview()
         {
@@ -69,17 +95,18 @@ namespace FileSorter
         public Task LoadFile(string file_path)
         {
             var probe = new NReco.VideoInfo.FFProbe();
-            var info = probe.GetMediaInfo(file_path);
+            FileInfo = probe.GetMediaInfo(file_path);
+            FileSize = new System.IO.FileInfo(file_path).Length;
+            OnFileInfoLoaded(FileInfo, FileSize);
 
-            TxtInfo.Text = (new System.IO.FileInfo(file_path).Length / (1024 * 1024)).ToString() +
-                " MB" + Environment.NewLine;
-            DisplayInfo(info);
+            TxtInfo.Text = (FileSize / (1024 * 1024)).ToString() + " MB" + Environment.NewLine;
+            DisplayInfo(FileInfo);
 
-            var width = info.Streams.First().Width;
-            var height = info.Streams.First().Height;
+            var width = FileInfo.Streams.First().Width;
+            var height = FileInfo.Streams.First().Height;
             SetImageSize(new Size(width, height));
 
-            var duration = info.Duration;
+            var duration = FileInfo.Duration;
 
             var step = (int)(duration.TotalSeconds / (ThumbnailCount + 1));
 

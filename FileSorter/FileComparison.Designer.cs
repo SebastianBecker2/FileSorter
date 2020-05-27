@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.SplitterContainer = new System.Windows.Forms.SplitContainer();
+            this.FpvSource = new FileSorter.FilePreview();
+            this.FpvDestination = new FileSorter.FilePreview();
             this.LblFilePath = new System.Windows.Forms.Label();
             this.BtnSkip = new System.Windows.Forms.Button();
             this.btnKeepBoth = new System.Windows.Forms.Button();
             this.btnKeepNew = new System.Windows.Forms.Button();
-            this.FpvSource = new FileSorter.FilePreview();
-            this.FpvDestination = new FileSorter.FilePreview();
             this.btnKeepOld = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SplitterContainer)).BeginInit();
             this.SplitterContainer.Panel1.SuspendLayout();
@@ -61,6 +61,26 @@
             this.SplitterContainer.SplitterDistance = 661;
             this.SplitterContainer.SplitterWidth = 6;
             this.SplitterContainer.TabIndex = 2;
+            // 
+            // FpvSource
+            // 
+            this.FpvSource.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FpvSource.FileInfo = null;
+            this.FpvSource.Location = new System.Drawing.Point(0, 0);
+            this.FpvSource.Name = "FpvSource";
+            this.FpvSource.Size = new System.Drawing.Size(661, 559);
+            this.FpvSource.TabIndex = 0;
+            this.FpvSource.FileInfoLoaded += new System.EventHandler<FileSorter.FileInfoLoadedEventArgs>(this.FpvSource_FileInfoLoaded);
+            // 
+            // FpvDestination
+            // 
+            this.FpvDestination.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FpvDestination.FileInfo = null;
+            this.FpvDestination.Location = new System.Drawing.Point(0, 0);
+            this.FpvDestination.Name = "FpvDestination";
+            this.FpvDestination.Size = new System.Drawing.Size(654, 559);
+            this.FpvDestination.TabIndex = 0;
+            this.FpvDestination.FileInfoLoaded += new System.EventHandler<FileSorter.FileInfoLoadedEventArgs>(this.FpvDestination_FileInfoLoaded);
             // 
             // LblFilePath
             // 
@@ -103,22 +123,6 @@
             this.btnKeepNew.TabIndex = 18;
             this.btnKeepNew.Text = "Keep new";
             this.btnKeepNew.UseVisualStyleBackColor = true;
-            // 
-            // FpvSource
-            // 
-            this.FpvSource.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FpvSource.Location = new System.Drawing.Point(0, 0);
-            this.FpvSource.Name = "FpvSource";
-            this.FpvSource.Size = new System.Drawing.Size(661, 559);
-            this.FpvSource.TabIndex = 0;
-            // 
-            // FpvDestination
-            // 
-            this.FpvDestination.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FpvDestination.Location = new System.Drawing.Point(0, 0);
-            this.FpvDestination.Name = "FpvDestination";
-            this.FpvDestination.Size = new System.Drawing.Size(654, 559);
-            this.FpvDestination.TabIndex = 0;
             // 
             // btnKeepOld
             // 

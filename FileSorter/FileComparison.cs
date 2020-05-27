@@ -60,5 +60,50 @@ namespace FileSorter
 
             base.OnFormClosing(e);
         }
+
+        private void FpvSource_FileInfoLoaded(object sender, FileInfoLoadedEventArgs e)
+        {
+            if (FpvDestination.FileInfo == null)
+            {
+                return;
+            }
+
+            TryAutoCompare();
+        }
+
+        private void FpvDestination_FileInfoLoaded(object sender, FileInfoLoadedEventArgs e)
+        {
+            if (FpvSource.FileInfo == null)
+            {
+                return;
+            }
+
+            TryAutoCompare();
+        }
+
+        private void TryAutoCompare()
+        {
+            var dest_dur = FpvDestination.FileInfo.Duration;
+            var src_dur = FpvSource.FileInfo.Duration;
+            var dur_diff = Math.Abs((dest_dur - src_dur).TotalSeconds);
+            if (dur_diff > 10)
+            {
+                // Files are too different
+                // User has to decide
+                return;
+            }
+
+            var dest_size = FpvDestination.FileSize;
+            var src_size = FpvSource.FileSize;
+            var size_diff = Math.Abs(dest_size - src_size);
+            if (src_size - dest_size < 100 * 1024)
+            {
+                FpvDestination.HighlightColor = Color.LightGreen;
+            }
+            else
+            {
+                FpvSource.HighlightColor = Color.LightGreen;
+            }
+        }
     }
 }

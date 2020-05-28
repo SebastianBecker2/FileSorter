@@ -8,7 +8,7 @@
     "Text": "Add dialog to modify destinations"
   },
   {
-    "Done": false,
+    "Done": true,
     "Text": "Filter in reassign dialog should be case insensitive"
   },
   {

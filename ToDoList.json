@@ -9,11 +9,11 @@
   },
   {
     "Done": true,
-    "Text": "Creating a new destination show the wrong destination path for the item"
+    "Text": "Add list of exceptions for destinations (those that will be excluded)"
   },
   {
-    "Done": false,
-    "Text": "Add list of exceptions for destinations (those that will be excluded)"
+    "Done": true,
+    "Text": "Creating a new destination show the wrong destination path for the item"
   },
   {
     "Done": true,

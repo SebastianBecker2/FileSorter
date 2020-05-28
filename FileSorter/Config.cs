@@ -15,6 +15,7 @@ namespace FileSorter
     {
         public string SourcePath { get; set; }
         public List<string> DestinationPaths { get; set; }
+        public List<string> ExceptionPaths { get; set; }
 
         public Config()
         {
@@ -28,6 +29,10 @@ namespace FileSorter
             {
                 LsbDestinationPaths.Items.AddRange(DestinationPaths.ToArray());
             }
+            if (ExceptionPaths != null)
+            {
+                LsbExceptionPaths.Items.AddRange(ExceptionPaths.ToArray());
+            }
 
             base.OnLoad(e);
         }
@@ -36,6 +41,7 @@ namespace FileSorter
         {
             SourcePath = TxtSourcePath.Text;
             DestinationPaths = LsbDestinationPaths.Items.Cast<string>().ToList();
+            ExceptionPaths = LsbExceptionPaths.Items.Cast<string>().ToList();
             DialogResult = DialogResult.OK;
         }
 
@@ -74,6 +80,29 @@ namespace FileSorter
             foreach (var s in LsbDestinationPaths.SelectedItems.OfType<string>().ToList())
             {
                 LsbDestinationPaths.Items.Remove(s);
+            }
+        }
+
+        private void BtnAddExceptionPath_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new CommonOpenFileDialog())
+            {
+                dlg.IsFolderPicker = true;
+
+                if (dlg.ShowDialog() != CommonFileDialogResult.Ok)
+                {
+                    return;
+                }
+
+                LsbExceptionPaths.Items.Add(dlg.FileName);
+            }
+        }
+
+        private void BtnRemoveExceptionPath_Click(object sender, EventArgs e)
+        {
+            foreach (var s in LsbExceptionPaths.SelectedItems.OfType<string>().ToList())
+            {
+                LsbExceptionPaths.Items.Remove(s);
             }
         }
     }

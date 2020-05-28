@@ -40,6 +40,19 @@ namespace FileSorter
             }
         }
 
+        public List<string> ExceptionPaths
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<string>>(Settings.Default.ExceptionPaths);
+            }
+            set
+            {
+                Settings.Default.ExceptionPaths = JsonConvert.SerializeObject(value);
+                Settings.Default.Save();
+            }
+        }
+
         private List<DestinationItem> FolderLookup;
 
         private OrderedSet<DestinationItem> RecentDestinationItems = new OrderedSet<DestinationItem>();
@@ -324,6 +337,7 @@ namespace FileSorter
         private IEnumerable<DestinationItem> BuildFolderLookup(string destination_path)
         {
             return Directory.EnumerateDirectories(destination_path, "*", SearchOption.TopDirectoryOnly)
+                .Where(path => !ExceptionPaths.Contains(path))
                 .SelectMany(path =>
                 {
                     var name = Path.GetFileName(path);
@@ -391,12 +405,14 @@ namespace FileSorter
             {
                 dlg.SourcePath = SourcePath;
                 dlg.DestinationPaths = DestinationPaths;
+                dlg.ExceptionPaths = ExceptionPaths;
                 if (dlg.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
                 SourcePath = dlg.SourcePath;
                 DestinationPaths = dlg.DestinationPaths;
+                ExceptionPaths = dlg.ExceptionPaths;
             }
         }
 

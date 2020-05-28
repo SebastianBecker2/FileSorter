@@ -109,7 +109,7 @@ namespace FileSorter
             }
 
             string new_destination;
-            string selected_path;
+            string new_path;
             using (var dlg = new CreateDestination())
             {
                 dlg.DestinationPaths = DestinationPaths;
@@ -124,18 +124,17 @@ namespace FileSorter
                 }
 
                 new_destination = dlg.DestinationName;
-                selected_path = dlg.SelectedDestinationPath;
+                new_path = Path.Combine(dlg.SelectedDestinationPath, new_destination);
             }
 
             var items = new_destination
                 .Split('(', ')', ',')
                 .Where(n => !string.IsNullOrWhiteSpace(n))
-                .Select(n => new DestinationItem { Key = n, Path = selected_path });
+                .Select(n => new DestinationItem { Key = n, Path = new_path });
 
             FolderLookup.AddRange(items);
 
-            Directory.CreateDirectory(
-                Path.Combine(selected_path, new_destination));
+            Directory.CreateDirectory(new_path);
 
             foreach (DataGridViewRow row in DgvSortedFiles.SelectedRows)
             {

@@ -9,15 +9,15 @@
   },
   {
     "Done": true,
-    "Text": "Filter in reassign dialog should be case insensitive"
-  },
-  {
-    "Done": false,
     "Text": "Creating a new destination show the wrong destination path for the item"
   },
   {
     "Done": false,
     "Text": "Add list of exceptions for destinations (those that will be excluded)"
+  },
+  {
+    "Done": true,
+    "Text": "Filter in reassign dialog should be case insensitive"
   },
   {
     "Done": true,

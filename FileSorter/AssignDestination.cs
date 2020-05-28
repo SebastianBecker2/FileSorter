@@ -114,7 +114,8 @@ namespace FileSorter
 
         private void TxtFilter_TextChanged(object sender, EventArgs e)
         {
-            var filtered_items = DestinationItems.Where(i => i.Key.Contains(TxtFilter.Text));
+            var filtered_items = DestinationItems
+                .Where(i => i.Key.ToLower().Contains(TxtFilter.Text.ToLower()));
 
             DisplayDestinationItems(filtered_items);
         }

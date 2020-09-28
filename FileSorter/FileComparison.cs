@@ -43,7 +43,7 @@ namespace FileSorter
             var result = DialogResult;
             if (!SourceThumbnailTask.IsCompleted)
             {
-                
+
                 e.Cancel = true;
                 FpvSource.CancelThumbnails();
                 SourceThumbnailTask.ContinueWith(t => DialogResult = result,
@@ -88,6 +88,9 @@ namespace FileSorter
             var dur_diff = Math.Abs((dest_dur - src_dur).TotalSeconds);
             if (dur_diff > 10)
             {
+                // Keep both?
+                btnKeepBoth.Focus();
+
                 // Files are too different
                 // User has to decide
                 return;
@@ -96,13 +99,32 @@ namespace FileSorter
             var dest_size = FpvDestination.FileSize;
             var src_size = FpvSource.FileSize;
             var size_diff = Math.Abs(dest_size - src_size);
-            if (size_diff < 100 * 1024 || src_size > dest_size)
+            if (size_diff < 100 * 1024)
             {
+                // Keep old
+                btnKeepOld.Focus();
                 FpvSource.HighlightColor = Color.LightGreen;
             }
             else
-            { 
-                FpvDestination.HighlightColor = Color.LightGreen;
+            {
+                // Try FrameCompare?
+                // If frames are equal, compare size
+                //   If old larger, keep old
+                //   If new larger, take new
+                // If frames are different, keep both
+
+                if (src_size > dest_size)
+                {
+                    // Keep old
+                    btnKeepOld.Focus();
+                    FpvSource.HighlightColor = Color.LightGreen;
+                }
+                else
+                {
+                    // Take new
+                    btnKeepNew.Focus();
+                    FpvDestination.HighlightColor = Color.LightGreen;
+                }
             }
         }
     }

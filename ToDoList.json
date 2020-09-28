@@ -58,5 +58,9 @@
   {
     "Done": true,
     "Text": "Show files without destinations in main window"
+  },
+  {
+    "Done": false,
+    "Text": "FFProbe Exception when comparing files of which one is opened\r\nException states, files doesn't exist"
   }
 ]

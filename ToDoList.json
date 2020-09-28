@@ -9,6 +9,14 @@
   },
   {
     "Done": true,
+    "Text": "FFProbe Exception when comparing files of which one is opened\r\nException states, files doesn't exist"
+  },
+  {
+    "Done": false,
+    "Text": "Add history to 'Move File' Operation to make it easier to move files directly."
+  },
+  {
+    "Done": true,
     "Text": "Add list of exceptions for destinations (those that will be excluded)"
   },
   {
@@ -58,9 +66,5 @@
   {
     "Done": true,
     "Text": "Show files without destinations in main window"
-  },
-  {
-    "Done": false,
-    "Text": "FFProbe Exception when comparing files of which one is opened\r\nException states, files doesn't exist"
   }
 ]

@@ -436,8 +436,12 @@ namespace FileSorter
             {
                 System.IO.File.Move(source, destination);
             }
-            catch (IOException)
+            catch (IOException exc)
             {
+                if (!exc.Message.Contains("already exists"))
+                {
+                    return;
+                }
                 using (var dlg = new FileComparison())
                 {
                     dlg.SourceFilePath = source;
@@ -445,19 +449,19 @@ namespace FileSorter
                     var result = dlg.ShowDialog();
                     switch (result)
                     {
-                        case DialogResult.Cancel:
-                            break;
-                        case DialogResult.Ignore:
-                            System.IO.File.Delete(destination);
-                            MoveFile(source, destination);
-                            break;
-                        case DialogResult.OK:
-                            destination = IncreaseFileCounter(destination);
-                            MoveFile(source, destination);
-                            break;
-                        case DialogResult.No:
-                            System.IO.File.Delete(source);
-                            break;
+                    case DialogResult.Cancel:
+                        break;
+                    case DialogResult.Ignore:
+                        System.IO.File.Delete(destination);
+                        MoveFile(source, destination);
+                        break;
+                    case DialogResult.OK:
+                        destination = IncreaseFileCounter(destination);
+                        MoveFile(source, destination);
+                        break;
+                    case DialogResult.No:
+                        System.IO.File.Delete(source);
+                        break;
                     }
                 }
             }

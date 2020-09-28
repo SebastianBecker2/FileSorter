@@ -96,13 +96,13 @@ namespace FileSorter
             var dest_size = FpvDestination.FileSize;
             var src_size = FpvSource.FileSize;
             var size_diff = Math.Abs(dest_size - src_size);
-            if (src_size - dest_size < 100 * 1024)
-            {
-                FpvDestination.HighlightColor = Color.LightGreen;
-            }
-            else
+            if (size_diff < 100 * 1024 || src_size > dest_size)
             {
                 FpvSource.HighlightColor = Color.LightGreen;
+            }
+            else
+            { 
+                FpvDestination.HighlightColor = Color.LightGreen;
             }
         }
     }

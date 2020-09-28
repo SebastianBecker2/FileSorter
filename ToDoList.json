@@ -8,12 +8,16 @@
     "Text": "Add dialog to modify destinations"
   },
   {
-    "Done": true,
-    "Text": "FFProbe Exception when comparing files of which one is opened\r\nException states, files doesn't exist"
+    "Done": false,
+    "Text": "Add history to 'Move File' Operation to make it easier to move files directly."
   },
   {
     "Done": false,
-    "Text": "Add history to 'Move File' Operation to make it easier to move files directly."
+    "Text": "Add labels to comaprison dialog. So the user knows which is 'new' and which is 'old'."
+  },
+  {
+    "Done": true,
+    "Text": "FFProbe Exception when comparing files of which one is opened\r\nException states, files doesn't exist"
   },
   {
     "Done": true,
@@ -66,5 +70,9 @@
   {
     "Done": true,
     "Text": "Show files without destinations in main window"
+  },
+  {
+    "Done": false,
+    "Text": "Automate comparison"
   }
 ]

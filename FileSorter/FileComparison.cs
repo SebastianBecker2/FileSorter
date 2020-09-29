@@ -6,10 +6,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using XnaFan.ImageComparison;
 
 namespace FileSorter
 {
@@ -61,7 +63,7 @@ namespace FileSorter
             base.OnFormClosing(e);
         }
 
-        private void FpvSource_FileInfoLoaded(object sender, FileInfoLoadedEventArgs e)
+        private void FpvSource_FileInfoLoaded(object sender, FilePreview.FileInfoLoadedEventArgs e)
         {
             if (FpvDestination.FileInfo == null)
             {
@@ -71,7 +73,7 @@ namespace FileSorter
             TryAutoCompare();
         }
 
-        private void FpvDestination_FileInfoLoaded(object sender, FileInfoLoadedEventArgs e)
+        private void FpvDestination_FileInfoLoaded(object sender, FilePreview.FileInfoLoadedEventArgs e)
         {
             if (FpvSource.FileInfo == null)
             {
@@ -103,28 +105,96 @@ namespace FileSorter
             {
                 // Keep old
                 btnKeepOld.Focus();
-                FpvSource.HighlightColor = Color.LightGreen;
+                FpvDestination.HighlightColor = Color.LightGreen;
             }
             else
             {
-                // Try FrameCompare?
-                // If frames are equal, compare size
-                //   If old larger, keep old
-                //   If new larger, take new
-                // If frames are different, keep both
+                // Thumbnail compare is done
+                // for each event of the thumbnails
+                // loaded
+                DoThumbnailCompare = true;
+                return;
+            }
+        }
 
-                if (src_size > dest_size)
-                {
-                    // Keep old
-                    btnKeepOld.Focus();
-                    FpvSource.HighlightColor = Color.LightGreen;
-                }
-                else
-                {
-                    // Take new
-                    btnKeepNew.Focus();
-                    FpvDestination.HighlightColor = Color.LightGreen;
-                }
+        bool DoThumbnailCompare = false;
+        int SourceThumbnailIndex = -1;
+        int DestinationThumbnailIndex = -1;
+        IList<bool> FrameDifferences = new List<bool>();
+
+        private void FpvSource_ThumbnailLoaded(object sender, FilePreview.ThumbnailLoadedEventArgs e)
+        {
+            SourceThumbnailIndex = e.Index;
+
+            // Do we even want to compare?
+            if (!DoThumbnailCompare)
+            {
+                return;
+            }
+
+            // Do we even have the corresponding image?
+            if (e.Index > DestinationThumbnailIndex)
+            {
+                return;
+            }
+
+            var corresponding_thumbnail = FpvDestination.GetThumbnail(e.Index);
+            CompareThumbnails(e.Thumbnail, corresponding_thumbnail);
+        }
+
+        private void FpvDestination_ThumbnailLoaded(object sender, FilePreview.ThumbnailLoadedEventArgs e)
+        {
+            DestinationThumbnailIndex = e.Index;
+
+            // Do we even want to compare?
+            if (!DoThumbnailCompare)
+            {
+                return;
+            }
+
+            // Do we even have the corresponding image?
+            if (e.Index > SourceThumbnailIndex)
+            {
+                return;
+            }
+
+            var corresponding_thumbnail = FpvSource.GetThumbnail(e.Index);
+            CompareThumbnails(e.Thumbnail, corresponding_thumbnail);
+        }
+
+        private void CompareThumbnails(Image source, Image destination)
+        {
+            var diff = source.PercentageDifference(destination);
+
+            FrameDifferences.Add(diff > 0.5d);
+
+            var diff_count = FrameDifferences.Count(d => d);
+
+            if (diff_count == 1)
+            {
+                return;
+            }
+
+            if (diff_count >= 2)
+            {
+                DoThumbnailCompare = false;
+                btnKeepBoth.Focus();
+                return;
+            }
+
+            var dest_size = FpvDestination.FileSize;
+            var src_size = FpvSource.FileSize;
+            if (dest_size > src_size)
+            {
+                // Keep old
+                btnKeepOld.Focus();
+                FpvDestination.HighlightColor = Color.LightGreen;
+            }
+            else
+            {
+                // Take new
+                btnKeepNew.Focus();
+                FpvSource.HighlightColor = Color.LightGreen;
             }
         }
     }

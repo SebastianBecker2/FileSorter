@@ -11,14 +11,8 @@ using System.Threading;
 using System.IO;
 using System.Diagnostics;
 
-namespace FileSorter
+namespace FileSorter.FilePreview
 {
-    public class FileInfoLoadedEventArgs : EventArgs
-    {
-        public NReco.VideoInfo.MediaInfo FileInfo { get; set; }
-        public long FileSize { get; set; }
-    }
-
     public partial class FilePreview : UserControl
     {
         private static readonly int ThumbnailCount = 20;
@@ -47,6 +41,22 @@ namespace FileSorter
             });
         }
 
+        public Image GetThumbnail(int index)
+        {
+            return ImlThumbnails.Images[index];
+        }
+
+        public event EventHandler<ThumbnailLoadedEventArgs> ThumbnailLoaded;
+
+        protected virtual void OnThumbnailLoaded(Image thumbnail, int index)
+        {
+            ThumbnailLoaded?.Invoke(this, new ThumbnailLoadedEventArgs
+            {
+                Thumbnail = thumbnail,
+                Index = index
+            });
+        }
+
         public FilePreview()
         {
             InitializeComponent();
@@ -55,7 +65,7 @@ namespace FileSorter
         }
 
         /// <summary>
-        /// Scales to images to max 256x256
+        /// Scales the images to max 256x256
         /// but keeping the aspect ratio
         /// </summary>
         /// <param name="original_size"></param>
@@ -114,14 +124,10 @@ namespace FileSorter
             var cancel_token = CancelTokenSource.Token;
             return Task.Run(() =>
             {
-                for (int i = 1; i < ThumbnailCount; i++)
+                for (int i = 1; i <= ThumbnailCount; i++)
                 {
                     var image_stream = new MemoryStream();
                     ffMpeg.GetVideoThumbnail(file_path, image_stream, step * i);
-                    if (image_stream.Length > 0)
-                    {
-                        var image = Image.FromStream(image_stream);
-                    }
 
                     if (cancel_token.IsCancellationRequested)
                     {
@@ -130,8 +136,10 @@ namespace FileSorter
                     }
                     Invoke((Action)delegate
                     {
-                        ImlThumbnails.Images.Add(Image.FromStream(image_stream));
-                        LsvThumbnails.Items.Add(new ListViewItem { ImageIndex = i });
+                        var image = Image.FromStream(image_stream);
+                        ImlThumbnails.Images.Add(image);
+                        OnThumbnailLoaded(image, i - 1);
+                        LsvThumbnails.Items.Add(new ListViewItem { ImageIndex = i -1 });
                     });
                 }
             }, CancelTokenSource.Token).ContinueWith(t => CancelTokenSource.Dispose());

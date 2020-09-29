@@ -105,12 +105,14 @@
     <Compile Include="FileInfo.Designer.cs">
       <DependentUpon>FileInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FilePreview.cs">
+    <Compile Include="FilePreview\FileInfoLoadedEventArgs.cs" />
+    <Compile Include="FilePreview\FilePreview.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FilePreview.Designer.cs">
+    <Compile Include="FilePreview\FilePreview.Designer.cs">
       <DependentUpon>FilePreview.cs</DependentUpon>
     </Compile>
+    <Compile Include="FilePreview\ThumbnailLoadedEventArgs.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,7 +140,7 @@
     <EmbeddedResource Include="FileInfo.resx">
       <DependentUpon>FileInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FilePreview.resx">
+    <EmbeddedResource Include="FilePreview\FilePreview.resx">
       <DependentUpon>FilePreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
@@ -168,6 +170,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageComparison\ImageComparison.csproj">
+      <Project>{9317de4a-213d-4afc-b58f-ed401204534a}</Project>
+      <Name>ImageComparison</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToDoManager\ToDoManager.csproj">
       <Project>{678ebc3a-44fe-4325-85aa-866001164074}</Project>
       <Name>ToDoManager</Name>

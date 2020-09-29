@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.FpvFileInfo = new FileSorter.FilePreview();
+            this.FpvFileInfo = new FileSorter.FilePreview.FilePreview();
             this.BtnOkay = new System.Windows.Forms.Button();
             this.LblFileName = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -82,7 +82,7 @@
 
         #endregion
 
-        private FilePreview FpvFileInfo;
+        private FilePreview.FilePreview FpvFileInfo;
         private System.Windows.Forms.Button BtnOkay;
         private System.Windows.Forms.Label LblFileName;
     }

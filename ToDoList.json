@@ -17,6 +17,10 @@
   },
   {
     "Done": true,
+    "Text": "Automate comparison (Needs ImageComparison to compare frames?)"
+  },
+  {
+    "Done": true,
     "Text": "FFProbe Exception when comparing files of which one is opened\r\nException states, files doesn't exist"
   },
   {
@@ -70,9 +74,5 @@
   {
     "Done": true,
     "Text": "Show files without destinations in main window"
-  },
-  {
-    "Done": false,
-    "Text": "Automate comparison"
   }
 ]

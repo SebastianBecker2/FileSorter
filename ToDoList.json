@@ -74,5 +74,9 @@
   {
     "Done": true,
     "Text": "Show files without destinations in main window"
+  },
+  {
+    "Done": false,
+    "Text": "Implement fuzzy search"
   }
 ]

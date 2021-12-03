@@ -1,4 +1,5 @@
 ﻿using FileSorter.Properties;
+using FuzzySharp;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using System;
@@ -271,29 +272,33 @@ namespace FileSorter
                 var previous_file = previous_files?.FirstOrDefault(f => f.FileName == name);
                 var previously_filtered = !string.IsNullOrWhiteSpace(previous_file?.FilterKey);
 
-                bool filtered_file = false;
-
-                foreach (var kvp in folder_lookup)
-                {
-                    if (name.IndexOf(kvp.Key, StringComparison.OrdinalIgnoreCase) < 0)
-                    {
-                        continue;
-                    }
-
-                    yield return new File
-                    {
-                        DestinationFolderPath = kvp.Path,
-                        FilePath = file_path,
-                        FileName = name,
-                        FilterKey = kvp.Key,
-                        Sort = previously_filtered ? previous_file.Sort : true,
-                    };
-                    filtered_file = true;
-                    break;
+                ( int Ratio, string Key, string Path ) GetLikeliestFolder(string n) {
+                    var f = folder_lookup
+                        .Select(i => new {
+                            Ratio = Fuzz.PartialRatio(i.Key, name),
+                            Key = i.Key,
+                            Path = i.Path
+                        })
+                        .Aggregate((f1, f2) => f1.Ratio > f2.Ratio ? f1 : f2);
+                    return (f.Ratio, f.Key, f.Path);
                 }
 
-                if (filtered_file)
+                File ToFile(string n, string key, string path)
                 {
+                    return new File
+                    {
+                        DestinationFolderPath = path,
+                        FilePath = file_path,
+                        FileName = name,
+                        FilterKey = key,
+                        Sort = previously_filtered ? previous_file.Sort : true,
+                    };
+                }
+
+                var likeliestFolder = GetLikeliestFolder(name);
+                if (likeliestFolder.Ratio > 75)
+                {
+                    yield return ToFile(name, likeliestFolder.Key, likeliestFolder.Path);
                     continue;
                 }
 
@@ -301,27 +306,10 @@ namespace FileSorter
                 // but requires regex, so it might be too slow.
                 name = name.Replace('_', ' ');
 
-                foreach (var kvp in folder_lookup)
+                likeliestFolder = GetLikeliestFolder(name);
+                if (likeliestFolder.Ratio > 75)
                 {
-                    if (name.IndexOf(kvp.Key, StringComparison.OrdinalIgnoreCase) < 0)
-                    {
-                        continue;
-                    }
-
-                    yield return new File
-                    {
-                        DestinationFolderPath = kvp.Path,
-                        FilePath = file_path,
-                        FileName = name,
-                        FilterKey = kvp.Key,
-                        Sort = previously_filtered ? previous_file.Sort : true,
-                    };
-                    filtered_file = true;
-                    break;
-                }
-
-                if (filtered_file)
-                {
+                    yield return ToFile(name, likeliestFolder.Key, likeliestFolder.Path);
                     continue;
                 }
 
@@ -371,7 +359,7 @@ namespace FileSorter
 
             var file = dgv.Rows[e.RowIndex].Tag as File;
 
-            new Task(() => Process.Start(file.FilePath)).Start();
+            new Task(() => System.Diagnostics.Process.Start(file.FilePath)).Start();
         }
 
         private void DgvSortedFiles_KeyPress(object sender, KeyPressEventArgs e)
@@ -449,19 +437,19 @@ namespace FileSorter
                     var result = dlg.ShowDialog();
                     switch (result)
                     {
-                    case DialogResult.Cancel:
-                        break;
-                    case DialogResult.Ignore:
-                        System.IO.File.Delete(destination);
-                        MoveFile(source, destination);
-                        break;
-                    case DialogResult.OK:
-                        destination = IncreaseFileCounter(destination);
-                        MoveFile(source, destination);
-                        break;
-                    case DialogResult.No:
-                        System.IO.File.Delete(source);
-                        break;
+                        case DialogResult.Cancel:
+                            break;
+                        case DialogResult.Ignore:
+                            System.IO.File.Delete(destination);
+                            MoveFile(source, destination);
+                            break;
+                        case DialogResult.OK:
+                            destination = IncreaseFileCounter(destination);
+                            MoveFile(source, destination);
+                            break;
+                        case DialogResult.No:
+                            System.IO.File.Delete(source);
+                            break;
                     }
                 }
             }
